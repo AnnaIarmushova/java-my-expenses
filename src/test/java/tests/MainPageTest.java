@@ -1,5 +1,6 @@
 package tests;
 
+import model.MainPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,30 +18,32 @@ public class MainPageTest extends BaseTest {
 
     @Test
     public void pageTitleTest() {
-        getDriver().get("https://my-expenses-three.vercel.app/");
 
-        WebElement pageTitle = getDriver().findElement(By.xpath("//*[@id=\"__next\"]/main/div/div/div[2]/div[1]/h1"));
-        assertEquals(pageTitle.getText(), "MY EXPENSES");
+        MainPage mainPage = new MainPage(getDriver());
+
+        WebElement title = mainPage.getPageTitle();
+
+        Assert.assertEquals(title.getText(),"MY EXPENSES");
     }
 
     @Test
     public void signInButtonTest() {
-        getDriver().get("https://my-expenses-three.vercel.app/");
 
-        WebElement navigation = getDriver().findElement(By.xpath("//*[@id=\"__next\"]/main/div/div/div[1]"));
-        WebElement signInButton = navigation.findElement(By.cssSelector("a[href=\"/login\"]"));
-        assertEquals(signInButton.getText(), "Sign in");
+        MainPage mainPage = new MainPage(getDriver());
+
+        Assert.assertEquals(mainPage.getSignInButton().getText(), "Sign in");
     }
 
     @Test
-    public void loginPageButtonTest() {
-        getDriver().get("https://my-expenses-three.vercel.app/");
+    public void loginPageButtonTest()  {
 
-        WebElement signInButton = getDriver().findElement(By.cssSelector("a[href=\"/login\"]"));
-        signInButton.click();
+        MainPage mainPage = new MainPage(getDriver());
 
-        WebElement loginPageButton = getWait3().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1:not([data-test=\"title\"])")));
-        assertEquals(loginPageButton.getText(), "LOGIN PAGE");
+        mainPage.signInButtonClick();
+
+        WebElement title = getWait3().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1[data-test=\"loginPageTitle\"]")));
+
+        Assert.assertEquals(title.getText(), "LOGIN PAGE");
     }
-    }
+}
 

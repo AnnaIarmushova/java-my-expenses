@@ -22,6 +22,8 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
 
         driver = new ChromeDriver(chromeOptions);
+
+        getDriver().get("https://my-expenses-three.vercel.app/");
     }
 
     @AfterMethod
