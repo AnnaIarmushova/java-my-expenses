@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 
 public class MainPage extends BasePage {
 
@@ -13,13 +12,14 @@ public class MainPage extends BasePage {
 
     private final WebElement signInButton;
 
-    private final WebElement loginPageButton;
+    private final WebElement signUpButton;
+
 
     public MainPage(WebDriver driver) {
         super(driver);
         this.pageTitle = driver.findElement(By.xpath("//*[@id=\"__next\"]/main/div/div/div[2]/div[1]/h1"));
         this.signInButton = driver.findElement(By.cssSelector("a[href=\"/login\"]"));
-        this.loginPageButton = driver.findElement(By.cssSelector("h1[data-test=\"loginPageTitle\"]"));
+        this.signUpButton = driver.findElement(By.cssSelector("a[href=\"/registration\"]"));
     }
 
     public WebElement getPageTitle() {
@@ -30,22 +30,21 @@ public class MainPage extends BasePage {
         return signInButton;
     }
 
-    public WebElement getLoginPageButton() {
-        return loginPageButton;
+    public WebElement getSignUpButton() {
+        return signUpButton;
     }
 
+
+    public MainPage pageTitle() {
+        getDriver().findElement(By.xpath("//*[@id=\"__next\"]/main/div/div/div[2]/div[1]/h1"));
+        return this;
+    }
     public MainPage signInButton() {
         getDriver().findElement(By.cssSelector("a[href=\"/login\"]"));
         return this;
     }
-    public MainPage signInButtonClick() {
-        getDriver().findElement(By.cssSelector("a[href=\"/login\"]")).click();
+    public MainPage signUpButton() {
+        getDriver().findElement(By.cssSelector("a[href=\"/registration\"]"));
         return this;
-    }
-
-    public  LoginPage loginPageButton() {
-        getWait3().until(ExpectedConditions.visibilityOfElementLocated
-                (By.cssSelector("h1[data-test=\"loginPageTitle\"]")));
-        return new LoginPage(getDriver());
     }
 }
